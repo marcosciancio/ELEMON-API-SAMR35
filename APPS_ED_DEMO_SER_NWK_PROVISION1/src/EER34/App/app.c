@@ -11,6 +11,20 @@
 #include "..\Drivers\EER34_spi.h"
 #include "..\Drivers\EER34_i2c.h"
 
+// Los defines que siguen aca son para compilar la aplicacion de demo de LoRa-Radio.
+// Si no se inclyye ninguno de esos defines compila la aplicaion de demo de LoRaWan.
+
+// Estos dos defines van en el nodo esclavo
+// El nodo esclavo espera indefinidamente recibir algo, cuando recibe
+// transmite y vuelve a esperar recibir, repitiendo el ciclo RX/TX.
+#define LORA_RADIO_TEST_RX
+#define LORA_RADIO_TEST_RXTX
+
+// Este define va en el nodo master
+// El nodo master transmite, despues espera recibir algo, con timeout,
+// y despues hace una demora y vuelve a repetor el ciclo TX/RX.
+//#define LORA_RADIO_TEST_TX
+
 // Private variables
 
 int timer1;		// Para EER34_tickCallback
@@ -27,6 +41,11 @@ static enum {
 	APP_FSM_IDLE,
 	APP_FSM_IDLE_TX,
 	APP_FSM_SLEEP,
+	APP_FSM_WAIT_RX,
+	APP_FSM_TEST_RX,
+	APP_FSM_TEST_TX,
+	APP_FSM_TEST_TXRX,
+	APP_FSM_TEST_RXTX,
 } fsm;
 
 /** 
@@ -53,12 +72,46 @@ void EER34_statusCallback(EER34_status_t sts, StackRetStatus_t LoraSts)
 			fsm = APP_FSM_TXTIMEOUT;
 	}
 	else if (sts == EER34_STATUS_TX_ERROR) {
-		printf("TX Error: %d\r\n", LoraSts);
 		if (fsm == APP_FSM_TXWAIT)
 			fsm = APP_FSM_TXERROR;
 	}
+	else if (sts == EER34_STATUS_RADIO_NO_DATA) {
+#ifdef LORA_RADIO_TEST_TX
+		if (fsm == APP_FSM_WAIT_RX) {
+			printf("Receive timeout\r\n");
+			fsm = APP_FSM_TEST_TX;
+		}
+#endif
+	}
+	else if (sts == EER34_STATUS_RADIO_RX_BUSY) {
+		// Esto da a veces en vez de recibir los datos en modo radio
+		printf("Receive RADIO_RX_BUSY\r\n");
+		
+#ifdef LORA_RADIO_TEST_RX
+#ifdef LORA_RADIO_TEST_RXTX
+		fsm = APP_FSM_TEST_RXTX;
+#else
+		fsm = APP_FSM_TEST_RX;
+#endif
+#else
+#ifdef LORA_RADIO_TEST_TX
+		timer1 = 500;
+		fsm = APP_FSM_TEST_TX;
+#endif
+#endif
+	}
+	else {
+		printf("Unknown status\r\n");
+	}
 }
 
+static void dump(uint8_t *data, int len)
+{
+	int i;
+	
+	for (i=0; i<len; i++)
+		printf("%2.2X", *data++);
+}
 /** 
  *	@brief	Callback de recepcion de datos la aplicacion
  *	@param	port		numero de puerto
@@ -67,6 +120,22 @@ void EER34_statusCallback(EER34_status_t sts, StackRetStatus_t LoraSts)
  */
 void EER34_rxDataCallback(int port, uint8_t *data, int len)
 {
+	printf("Received %d bytes: ", len);
+	dump(data, len);
+	printf("\r\n");
+	
+#ifdef LORA_RADIO_TEST_RX
+#ifdef LORA_RADIO_TEST_RXTX
+	fsm = APP_FSM_TEST_RXTX;
+#else
+	fsm = APP_FSM_TEST_RX;
+#endif
+#else
+#ifdef LORA_RADIO_TEST_TX
+	timer1 = 500;
+	fsm = APP_FSM_TEST_TX;
+#endif
+#endif
 }
 
 /** 
@@ -111,7 +180,6 @@ void EES34_appInit(void)
 
 	// Este seteo debe ir primero porque inicia el stack LoRaWan
 	res = EER34_setBand(ISM_AU915, 1);
-//	res = EER34_setBand(ISM_AU915, 0);
 
 	// Estos seteos pueden ir en cualqueir orden pero siempre
 	// despues de setear la banda (sino dan error)
@@ -216,6 +284,15 @@ void TestI2C(void)
 }
 
 
+void loraRadioSet(void)
+{
+	EER34_LoraRadioParams_t par;
+	
+	EER34_loraRadioSetDefaults(&par);
+	
+	EER34_loraRadioSetup(&par);
+}
+
 /** 
  *	Task de la aplicacion
  */
@@ -253,9 +330,20 @@ void EES34_appTask(void)
 	case APP_FSM_JOINFAILED:
 		printf("Join failed\r\n\r\n");
 	case APP_FSM_INIT:
+#ifdef LORA_RADIO_TEST_RX
+		loraRadioSet();
+		fsm = APP_FSM_TEST_RX;
+#else
+#ifdef LORA_RADIO_TEST_TX
+		loraRadioSet();
+		timer1 = 0;
+		fsm = APP_FSM_TEST_TX;		
+#else
 		printf("Sending join request\r\n");
 		EER34_joinOTAA();
 		fsm = APP_FSM_JOINING;
+#endif
+#endif
 		break;
 	case APP_FSM_JOINING:
 		break;
@@ -276,7 +364,7 @@ void EES34_appTask(void)
 		break;
 	case APP_FSM_TXOK:
 		printf("Transmit OK\r\n");
-		timer1 = 1000;
+		timer1 = 500;
 		fsm = APP_FSM_IDLE;
 		break;
 	case APP_FSM_TXTIMEOUT:
@@ -320,6 +408,40 @@ void EES34_appTask(void)
 				printf("Sleep failed\r\n");
 				timer1 = 50;
 			}
+		}
+		break;
+	case APP_FSM_TEST_RX:
+		// Si puede iniciar la recepcion pasa a esperar el dato
+		// sin timeout.
+		if (EER34_loraRadioRx(0))
+			fsm = APP_FSM_WAIT_RX;
+		break;
+	case APP_FSM_WAIT_RX:
+		break;
+	case APP_FSM_TEST_TX:
+		if (!timer1) {
+			if (EER34_loraRadioTx(data, sizeof(data))) {
+				*data = count++;
+				printf("Transmit %d bytes: ", sizeof(data));
+				dump(data, sizeof(data));
+				printf("\r\n");
+				EER34_loraRadioTx(data, sizeof(data));
+				timer1 = 500;
+				fsm = APP_FSM_TEST_TXRX;
+			}
+		}
+		break;
+	case APP_FSM_TEST_TXRX:
+		if (EER34_loraRadioRx(1000))
+			fsm = APP_FSM_WAIT_RX;
+		break;
+	case APP_FSM_TEST_RXTX:
+		if (EER34_loraRadioTx(data, sizeof(data))) {
+			printf("Transmit %d bytes: ", sizeof(data));
+			dump(data, sizeof(data));
+			printf("\r\n");
+			EER34_loraRadioTx(data, sizeof(data));
+			fsm = APP_FSM_TEST_RX;
 		}
 		break;
 	default:

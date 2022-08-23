@@ -81,7 +81,8 @@
 #endif
 
 #if (SAMR35)
-#  include "samr34.h"   // samr35.h
+//#  include "samr35.h"
+#  include "samr34.h"
 #endif
 
 #if (SAML22)

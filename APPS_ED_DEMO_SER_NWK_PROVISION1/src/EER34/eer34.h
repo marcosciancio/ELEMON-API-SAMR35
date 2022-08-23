@@ -11,6 +11,7 @@
 
 #include "asf.h"
 #include "lorawan.h"
+#include "radio_interface.h"
 
 // Macros
 
@@ -30,6 +31,8 @@ typedef enum {
 	EER34_STATUS_TX_TIMEOUT,
 	EER34_STATUS_RX_ERROR,
 	EER34_STATUS_TX_ERROR,
+	EER34_STATUS_RADIO_NO_DATA,
+	EER34_STATUS_RADIO_RX_BUSY,
 } EER34_status_t;
 
 typedef enum {
@@ -41,6 +44,14 @@ typedef enum {
 	EER34_ADR_OFF = 0,
 	EER34_ADR_ON,
 } EER34_adrMode_t;
+
+typedef struct {
+    uint32_t freq;				// frecuencia en Hz
+	RadioLoRaBandWidth_t bw;	// bandwidth (enum)
+    int pwr;					// numero ??
+    int sf;						// 7 a 12
+    uint8_t sync;				// 1 byte
+} EER34_LoraRadioParams_t;
 
 // Variables publicas
 
@@ -75,5 +86,9 @@ void EES34_appTask(void);
 void EES34_appResetCallback(unsigned int rcause);
 void EES34_enterLowPower(void);
 void EES34_exitLowPower(void);
+void EER34_loraRadioSetDefaults(EER34_LoraRadioParams_t *par);
+int EER34_loraRadioSetup(EER34_LoraRadioParams_t *par);
+int EER34_loraRadioRx(int tout);
+int EER34_loraRadioTx(uint8_t *data, int len);
 
 #endif /* EER34_H_ */

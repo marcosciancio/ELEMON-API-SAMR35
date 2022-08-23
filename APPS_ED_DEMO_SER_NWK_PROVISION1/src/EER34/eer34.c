@@ -383,6 +383,82 @@ int EER34_sleep(uint32_t time)
 #endif
 }
 
+
+/** 
+ *	Carga defaults en estrutura de parametros de LoRa radio
+ */
+void EER34_loraRadioSetDefaults(EER34_LoraRadioParams_t *par)
+{
+	par->bw = BW_125KHZ;
+	par->freq = 916800000;
+	par->pwr = 1;
+	par->sf = 7;
+	par->sync = 0x12;
+}
+
+int EER34_loraRadioSetup(EER34_LoraRadioParams_t *par)
+{
+	static volatile RadioError_t res;
+	
+	res = RADIO_SetAttr(BANDWIDTH, &par->bw);
+	res = RADIO_SetAttr(CHANNEL_FREQUENCY, &par->freq) ;
+	uint32_t fdev = 25000;
+	res = RADIO_SetAttr(CHANNEL_FREQUENCY_DEVIATION, &fdev);
+	uint8_t crc_state = 1;
+	res = RADIO_SetAttr(CRC_ON, &crc_state);
+	RadioErrorCodingRate_t cr = CR_4_5;
+	res = RADIO_SetAttr(ERROR_CODING_RATE, &cr);
+	uint8_t iqi = 0;
+	res = RADIO_SetAttr(IQINVERTED, &iqi);
+	res = RADIO_SetAttr(LORA_SYNC_WORD, &par->sync);
+	RadioModulation_t mod = MODULATION_LORA;
+	res = RADIO_SetAttr(MODULATION, &mod);
+	uint8_t pa_boost = 0;
+	res = RADIO_SetAttr(PABOOST, &pa_boost);
+	int16_t outputPwr = 1;
+	res = RADIO_SetAttr(OUTPUT_POWER, &par->pwr);
+	res = RADIO_SetAttr(SPREADING_FACTOR, &par->sf);
+	uint32_t wdt = 0;
+	res = RADIO_SetAttr(WATCHDOG_TIMEOUT, (void*)&wdt);
+	
+	uint32_t time;
+	time = LORAWAN_Pause();
+	
+	if (time > 0)
+		return 1;
+		
+	return 0;
+}
+
+int EER34_loraRadioRx(int tout)
+{
+	RadioReceiveParam_t radioReceiveParam ;
+	uint32_t rxTimeout = tout;
+	radioReceiveParam.action = RECEIVE_START ;
+	radioReceiveParam.rxWindowSize = rxTimeout ;
+	if (RADIO_Receive(&radioReceiveParam) == 0)
+		return 1;
+		
+	return 0;
+}
+
+int EER34_loraRadioTx(uint8_t *data, int len)
+{
+	// Copia los datos al buffer
+	memcpy(txBuffer, data, len);
+
+	RadioError_t radioStatus;
+	RadioTransmitParam_t radioTransmitParam;
+	radioTransmitParam.bufferLen = len;
+	radioTransmitParam.bufferPtr = txBuffer;
+	radioStatus = RADIO_Transmit(&radioTransmitParam);
+	
+	if (radioStatus == ERR_NONE)
+		return 1;
+		
+	return 0;
+}
+
 /** 
  *	Callback de respuesta del timer de transmision
  */
@@ -422,7 +498,7 @@ static void appDataCallback(void *appHandle, appCbParams_t *appdata)
 {
 	EER34_status_t sts = EER34_STATUS_UNKNOWN;
     StackRetStatus_t loraSts = LORAWAN_INVALID_REQUEST;
-
+	
     if (appdata->evt == LORAWAN_EVT_RX_DATA_AVAILABLE) {
         loraSts = appdata->param.rxData.status;
 		if (loraSts == LORAWAN_SUCCESS) {
@@ -433,6 +509,17 @@ static void appDataCallback(void *appHandle, appCbParams_t *appdata)
 			}
 			sts = EER34_STATUS_RX_ERROR;
 		}
+		else if (loraSts == LORAWAN_RADIO_SUCCESS) {
+			if((appdata->param.rxData.dataLength > 0) && (appdata->param.rxData.pData != NULL)) {
+				EER34_rxDataCallback(0,
+					appdata->param.rxData.pData, appdata->param.rxData.dataLength);
+				return;
+			}
+			sts = EER34_STATUS_RX_ERROR;
+		}
+		else if (loraSts == LORAWAN_RADIO_BUSY) {
+			sts = EER34_STATUS_RADIO_RX_BUSY;
+		}
 	}
 	
     else if (appdata->evt == LORAWAN_EVT_TRANSACTION_COMPLETE) {
@@ -441,6 +528,8 @@ static void appDataCallback(void *appHandle, appCbParams_t *appdata)
 		    SwTimerStop(txTimerId);
 			sts = EER34_STATUS_TX_SUCCSESS;
 		}
+		else if (loraSts == LORAWAN_RADIO_NO_DATA)
+			sts = EER34_STATUS_RADIO_NO_DATA;
 		else
 			sts = EER34_STATUS_TX_ERROR;
 	}
