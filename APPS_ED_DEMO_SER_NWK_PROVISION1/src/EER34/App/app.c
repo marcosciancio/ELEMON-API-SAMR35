@@ -6,10 +6,10 @@
  */ 
 #include "..\eer34.h"
 
-#include "EER34_gpio.h"
-#include "EER34_adc.h"
-#include "EER34_spi.h"
-#include "EER34_i2c.h"
+#include "..\Drivers\EER34_gpio.h"
+#include "..\Drivers\EER34_adc.h"
+#include "..\Drivers\EER34_spi.h"
+#include "..\Drivers\EER34_i2c.h"
 
 // Private variables
 

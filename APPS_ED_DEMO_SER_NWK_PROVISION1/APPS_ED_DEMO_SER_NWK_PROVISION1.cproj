@@ -1042,6 +1042,7 @@
     <Folder Include="src\config\" />
     <Folder Include="src\EER34" />
     <Folder Include="src\EER34\App" />
+    <Folder Include="src\EER34\Drivers" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\asf.h">
@@ -1887,28 +1888,28 @@
     <Compile Include="src\EER34\App\app.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_adc.c">
+    <Compile Include="src\EER34\Drivers\EER34_adc.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_adc.h">
+    <Compile Include="src\EER34\Drivers\EER34_adc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_gpio.c">
+    <Compile Include="src\EER34\Drivers\EER34_gpio.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_gpio.h">
+    <Compile Include="src\EER34\Drivers\EER34_gpio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_i2c.c">
+    <Compile Include="src\EER34\Drivers\EER34_i2c.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_i2c.h">
+    <Compile Include="src\EER34\Drivers\EER34_i2c.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_spi.c">
+    <Compile Include="src\EER34\Drivers\EER34_spi.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\EER34\App\EER34_spi.h">
+    <Compile Include="src\EER34\Drivers\EER34_spi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\EER34\eer34.c">
