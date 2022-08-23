@@ -1,0 +1,23 @@
+# make and build files
+*.lst
+*.o
+*.eep
+*.lss
+*.map
+*.sym
+*.elf
+*.hex
+*.d
+*.ind
+*.ld
+*.asm
+*.bin
+*.atsuo
+
+APPS_ED_DEMO_SER_NWK_PROVISION1/Debug/*
+APPS_ED_DEMO_SER_NWK_PROVISION1/Debug/src/*
+APPS_ED_DEMO_SER_NWK_PROVISION1/Debug/App/*
+APPS_ED_DEMO_SER_NWK_PROVISION1/Debug/DRIVERS/*
+APPS_ED_DEMO_SER_NWK_PROVISION1/Debug/HAL/*
+APPS_ED_DEMO_SER_NWK_PROVISION1/Debug/PortedLibraries/*
+
