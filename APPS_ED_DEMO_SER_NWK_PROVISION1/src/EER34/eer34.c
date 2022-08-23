@@ -180,9 +180,18 @@ int EER34_setBand(IsmBand_t band, int subBand)
 	if (LORAWAN_Reset(band) != LORAWAN_SUCCESS)
 		return 0;
 
-	allowedMin125khzCh = (subBand-1)*EER34_MAX_SUBBAND_CHANNELS;
-	allowedMax125khzCh = ((subBand-1)*EER34_MAX_SUBBAND_CHANNELS) + 7 ;
-	allowed500khzChannel = subBand + 63;
+	if (subBand > 8)
+	subBand = 8;
+	if (subBand < 1) {
+		allowedMin125khzCh = 0;
+		allowedMax125khzCh = (7*EER34_MAX_SUBBAND_CHANNELS) + 7 ;
+		allowed500khzChannel = 64;
+	}
+	else {
+		allowedMin125khzCh = (subBand-1)*EER34_MAX_SUBBAND_CHANNELS;
+		allowedMax125khzCh = ((subBand-1)*EER34_MAX_SUBBAND_CHANNELS) + 7 ;
+		allowed500khzChannel = subBand + 63;
+	}
 	
     for (chParams.channelId = 0; chParams.channelId < EER34_MAX_NA_CHANNELS; chParams.channelId++)
     {
@@ -190,6 +199,10 @@ int EER34_setBand(IsmBand_t band, int subBand)
 	    {
 		    chParams.channelAttr.status = true;
 	    }
+		else if (subBand < 1 && chParams.channelId > 63)
+		{
+			chParams.channelAttr.status = true;
+		}
 	    else if(chParams.channelId == allowed500khzChannel)
 	    {
 		    chParams.channelAttr.status = true;
@@ -410,8 +423,6 @@ static void appDataCallback(void *appHandle, appCbParams_t *appdata)
 	EER34_status_t sts = EER34_STATUS_UNKNOWN;
     StackRetStatus_t loraSts = LORAWAN_INVALID_REQUEST;
 
-    SwTimerStop(txTimerId);
-
     if (appdata->evt == LORAWAN_EVT_RX_DATA_AVAILABLE) {
         loraSts = appdata->param.rxData.status;
 		if (loraSts == LORAWAN_SUCCESS) {
@@ -420,14 +431,18 @@ static void appDataCallback(void *appHandle, appCbParams_t *appdata)
 					appdata->param.rxData.pData+1, appdata->param.rxData.dataLength-1);
 				return;
 			}
-			sts = EER34_STATUS_TX_ACK;
+			sts = EER34_STATUS_RX_ERROR;
 		}
 	}
 	
     else if (appdata->evt == LORAWAN_EVT_TRANSACTION_COMPLETE) {
-        loraSts = appdata->param.rxData.status;
-		if (loraSts == LORAWAN_SUCCESS || loraSts == LORAWAN_RADIO_SUCCESS)
-			sts = EER34_STATUS_TX_SUCCSESS;
+        loraSts = appdata->param.transCmpl.status;
+		if (loraSts == LORAWAN_SUCCESS || loraSts == LORAWAN_RADIO_SUCCESS) {
+		    SwTimerStop(txTimerId);
+		    sts = EER34_STATUS_TX_SUCCSESS;
+	    }
+	    else
+			sts = EER34_STATUS_TX_ERROR;
 	}
 
 	EER34_statusCallback(sts, loraSts);
