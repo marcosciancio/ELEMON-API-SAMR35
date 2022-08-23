@@ -131,7 +131,7 @@ int main(void)
     sio2host_init();
 
 	// Esto es por si se quiere analizar o imprimir la causa del reset
-    EES34_reset();
+	EES34_reset();
 	
 #if (_DEBUG_ == 1)
     SYSTEM_AssertSubscribe(assertHandler);
@@ -144,7 +144,7 @@ int main(void)
     while (1)
     {
         SYSTEM_RunTasks();
-
+		
 //#ifdef CONF_PMM_ENABLE
         //if (false == certAppEnabled)
         //{

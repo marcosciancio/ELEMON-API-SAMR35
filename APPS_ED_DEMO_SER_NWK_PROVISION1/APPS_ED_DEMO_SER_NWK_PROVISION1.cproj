@@ -32,14 +32,13 @@
       <framework-data>
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.utils" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam0.drivers.port" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.utils.cmsis.samr34.source.template" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.addons.sio2host" value="Add" config="uart" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.lorawan" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="thirdparty.wireless.lorawan.services.edbg_eui" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.tcc" value="Add" config="polled" content-id="Atmel.ASF" />
-          <option id="common.utils" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.utils.cmsis.samr34.source.template" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.lorawan.pmm" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="thirdparty.wireless.lorawan.services.edbg_eui" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.lorawan.services.pds" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.lorawan.services.resources" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.lorawan.tal.sx1276" value="Add" config="" content-id="Atmel.ASF" />
@@ -53,12 +52,6 @@
           <configuration key="config.sam0.drivers.sercom.spi" value="polled" default="polled" content-id="Atmel.ASF" />
           <configuration key="config.thirdparty.wireless.lorawan.reg.band" value="multi_band" default="multi_band" content-id="Atmel.ASF" />
           <configuration key="config.thirdparty.wireless.lorawan.regparams.multiband.rna" value="disabled" default="disabled" content-id="Atmel.ASF" />
-          <configuration key="config.common2.services.delay" value="systick" default="systick" content-id="Atmel.ASF" />
-          <configuration key="config.sam0.drivers.extint" value="callback" default="callback" content-id="Atmel.ASF" />
-          <configuration key="config.sam0.drivers.tc" value="callback" default="callback" content-id="Atmel.ASF" />
-          <configuration key="config.thirdparty.wireless.lorawan.services.aes" value="hw" default="hw" content-id="Atmel.ASF" />
-          <configuration key="config.thirdparty.wireless.lorawan" value="lib" default="lib" content-id="Atmel.ASF" />
-          <configuration key="config.thirdparty.wireless.lorawan.sal" value="hw" default="hw" content-id="Atmel.ASF" />
         </configurations>
         <files>
           <file path="src/ASF/common2/services/delay/delay.h" framework="" version="" source="common2/services/delay/delay.h" changed="False" content-id="Atmel.ASF" />
@@ -248,9 +241,6 @@
           <file path="src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.c" framework="" version="" source="thirdparty/wireless/addons/sio2host/uart/sio2host.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.h" framework="" version="" source="thirdparty/wireless/addons/sio2host/uart/sio2host.h" changed="False" content-id="Atmel.ASF" />
           <file path="Getting Started with Serial Provisioning of LoRaWAN Application.pdf" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/Getting Started with Serial Provisioning of LoRaWAN Application.pdf" changed="False" content-id="Atmel.ASF" />
-          <file path="src/config/conf_certification.h" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/conf_certification.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/enddevice_cert.c" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/enddevice_cert.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/enddevice_cert.h" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/enddevice_cert.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/enddevice_demo.c" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/enddevice_demo.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/enddevice_demo.h" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/enddevice_demo.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/main.c" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/main.c" changed="False" content-id="Atmel.ASF" />
@@ -268,6 +258,7 @@
           <file path="src/config/conf_sio2host.h" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/multiband/samr34_xpro/conf_sio2host.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/config/conf_spi.h" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/multiband/samr34_xpro/conf_spi.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/config/conf_sw_timer.h" framework="" version="" source="thirdparty/wireless/lorawan/apps/ed_demo_ser_nwk_provision/multiband/samr34_xpro/conf_sw_timer.h" changed="False" content-id="Atmel.ASF" />
+          <file path="MLS_Migration_Guide.pdf" framework="" version="" source="thirdparty/wireless/lorawan/doc/MLS_Migration_Guide.pdf" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/lorawan/hal/inc/atomic.h" framework="" version="" source="thirdparty/wireless/lorawan/hal/inc/atomic.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/lorawan/hal/inc/radio_driver_hal.h" framework="" version="" source="thirdparty/wireless/lorawan/hal/inc/radio_driver_hal.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/lorawan/hal/inc/sleep.h" framework="" version="" source="thirdparty/wireless/lorawan/hal/inc/sleep.h" changed="False" content-id="Atmel.ASF" />
@@ -339,23 +330,18 @@
           <file path="src/ASF/thirdparty/wireless/services/common_hw_timer/sam0/lib/libsam0_lib_hw_timer.a" framework="" version="" source="thirdparty/wireless/services/common_hw_timer/sam0/lib/libsam0_lib_hw_timer.a" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/services/nvm/common_nvm.h" framework="" version="" source="thirdparty/wireless/services/nvm/common_nvm.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/services/nvm/sam0/sam_nvm.c" framework="" version="" source="thirdparty/wireless/services/nvm/sam0/sam_nvm.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/tcc.c" framework="" version="3.47.0" source="sam0\drivers\tcc\tcc.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_buffering/qs_tcc_buffering.h" framework="" version="3.47.0" source="sam0\drivers\tcc\quick_start_buffering\qs_tcc_buffering.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_dma/qs_tcc_dma.h" framework="" version="3.47.0" source="sam0\drivers\tcc\quick_start_dma\qs_tcc_dma.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/tcc.h" framework="" version="3.47.0" source="sam0\drivers\tcc\tcc.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start/qs_tcc_basic.h" framework="" version="3.47.0" source="sam0\drivers\tcc\quick_start\qs_tcc_basic.h" changed="False" content-id="Atmel.ASF" />
         </files>
-        <documentation help="http://asf.atmel.com/docs/3.47.0/thirdparty.wireless.lorawan.apps.ed_demo_ser_nwk_provision.multiband.samr34_xpro/html/index.html" />
+        <documentation help="https://asf.microchip.com/docs/3.49.1/thirdparty.wireless.lorawan.apps.ed_demo_ser_nwk_provision.multiband.samr34_xpro/html/index.html" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.47.0" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.49.1" />
         </dependencies>
         <project id="thirdparty.wireless.lorawan.apps.ed_demo_ser_nwk_provision.multiband.samr34_xpro" value="Add" config="" content-id="Atmel.ASF" />
         <board id="board.samr34_xplained_pro" value="Add" config="" content-id="Atmel.ASF" />
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J41800072487</avrtoolserialnumber>
+    <avrtoolserialnumber>J42700026313</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1081022B</avrdeviceexpectedsignature>
     <avrtoolinterface>SWD</avrtoolinterface>
     <com_atmel_avrdbg_tool_atmelice>
@@ -366,7 +352,7 @@
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800072487</ToolNumber>
+      <ToolNumber>J42700026313</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
@@ -393,20 +379,19 @@
       <Value>AU_BAND=1</Value>
       <Value>JPN_BAND=1</Value>
       <Value>AS_BAND=1</Value>
+      <Value>EDBG_EUI_READ=0</Value>
       <Value>__SAMR34J18B__</Value>
-      <Value>CERT_APP=1</Value>
       <Value>CONF_PMM_ENABLE</Value>
       <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
       <Value>SPI_CALLBACK_MODE=false</Value>
       <Value>KR_BAND=1</Value>
-      <Value>EDBG_EUI_READ=1</Value>
       <Value>ARM_MATH_CM0PLUS=true</Value>
+      <Value>MODULE_EUI_READ=0</Value>
       <Value>RANDOM_NW_ACQ=0</Value>
       <Value>BOARD=SAMR34_XPLAINED_PRO</Value>
       <Value>EXTINT_CALLBACK_MODE=true</Value>
       <Value>IND_BAND=1</Value>
       <Value>USART_CALLBACK_MODE=true</Value>
-      <Value>TCC_ASYNC=false</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -469,7 +454,6 @@
       <Value>../src/ASF/thirdparty/wireless/lorawan/services/edbg_eui</Value>
       <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -555,10 +539,9 @@
       <Value>../src/ASF/thirdparty/wireless/lorawan/services/edbg_eui</Value>
       <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DADC_CALLBACK_MODE=true -DARM_MATH_CM0PLUS=true -DAS_BAND=1 -DAU_BAND=1 -DBOARD=SAMR34_XPLAINED_PRO -DCERT_APP=1 -DCONF_PMM_ENABLE -DEDBG_EUI_READ=1 -DENABLE_PDS=1 -DEU_BAND=1 -DEXTINT_CALLBACK_MODE=true -DI2C_MASTER_CALLBACK_MODE=true -DIND_BAND=1 -DJPN_BAND=1 -DKR_BAND=1 -DNA_BAND=1 -DRANDOM_NW_ACQ=0 -DRTC_COUNT_ASYNC=true -DSPI_CALLBACK_MODE=false -DSYSTICK_MODE -DTC_ASYNC=true -DUSART_CALLBACK_MODE=true -D_DEBUG_=0 -D__SAMR34J18B__ -DTCC_ASYNC=false</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DADC_CALLBACK_MODE=true -DARM_MATH_CM0PLUS=true -DAS_BAND=1 -DAU_BAND=1 -DBOARD=SAMR34_XPLAINED_PRO -DCONF_PMM_ENABLE -DEDBG_EUI_READ=0 -DENABLE_PDS=1 -DEU_BAND=1 -DEXTINT_CALLBACK_MODE=true -DI2C_MASTER_CALLBACK_MODE=true -DIND_BAND=1 -DJPN_BAND=1 -DKR_BAND=1 -DMODULE_EUI_READ=0 -DNA_BAND=1 -DRANDOM_NW_ACQ=0 -DRTC_COUNT_ASYNC=true -DSPI_CALLBACK_MODE=false -DSYSTICK_MODE -DTC_ASYNC=true -DUSART_CALLBACK_MODE=true -D_DEBUG_=0 -D__SAMR34J18B__</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../src/ASF/sam0/boards/samr34_xplained_pro</Value>
@@ -619,7 +602,6 @@
       <Value>../src/ASF/thirdparty/wireless/lorawan/services/edbg_eui</Value>
       <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -647,20 +629,19 @@
       <Value>AU_BAND=1</Value>
       <Value>JPN_BAND=1</Value>
       <Value>AS_BAND=1</Value>
+      <Value>EDBG_EUI_READ=0</Value>
       <Value>__SAMR34J18B__</Value>
-      <Value>CERT_APP=1</Value>
       <Value>CONF_PMM_ENABLE</Value>
       <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
       <Value>SPI_CALLBACK_MODE=false</Value>
       <Value>KR_BAND=1</Value>
-      <Value>EDBG_EUI_READ=1</Value>
       <Value>ARM_MATH_CM0PLUS=true</Value>
+      <Value>MODULE_EUI_READ=0</Value>
       <Value>RANDOM_NW_ACQ=0</Value>
       <Value>BOARD=SAMR34_XPLAINED_PRO</Value>
       <Value>EXTINT_CALLBACK_MODE=true</Value>
       <Value>IND_BAND=1</Value>
       <Value>USART_CALLBACK_MODE=true</Value>
-      <Value>TCC_ASYNC=false</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -724,7 +705,6 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
       <Value>../src/config</Value>
       <Value>../src/EER34</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -811,11 +791,10 @@
       <Value>../src/ASF/thirdparty/wireless/lorawan/services/edbg_eui</Value>
       <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DADC_CALLBACK_MODE=true -DARM_MATH_CM0PLUS=true -DAS_BAND=1 -DAU_BAND=1 -DBOARD=SAMR34_XPLAINED_PRO -DCERT_APP=1 -DCONF_PMM_ENABLE -DEDBG_EUI_READ=1 -DENABLE_PDS=1 -DEU_BAND=1 -DEXTINT_CALLBACK_MODE=true -DI2C_MASTER_CALLBACK_MODE=true -DIND_BAND=1 -DJPN_BAND=1 -DKR_BAND=1 -DNA_BAND=1 -DRANDOM_NW_ACQ=0 -DRTC_COUNT_ASYNC=true -DSPI_CALLBACK_MODE=false -DSYSTICK_MODE -DTC_ASYNC=true -DUSART_CALLBACK_MODE=true -D_DEBUG_=0 -D__SAMR34J18B__ -DTCC_ASYNC=false</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DADC_CALLBACK_MODE=true -DARM_MATH_CM0PLUS=true -DAS_BAND=1 -DAU_BAND=1 -DBOARD=SAMR34_XPLAINED_PRO -DCONF_PMM_ENABLE -DEDBG_EUI_READ=0 -DENABLE_PDS=1 -DEU_BAND=1 -DEXTINT_CALLBACK_MODE=true -DI2C_MASTER_CALLBACK_MODE=true -DIND_BAND=1 -DJPN_BAND=1 -DKR_BAND=1 -DMODULE_EUI_READ=0 -DNA_BAND=1 -DRANDOM_NW_ACQ=0 -DRTC_COUNT_ASYNC=true -DSPI_CALLBACK_MODE=false -DSYSTICK_MODE -DTC_ASYNC=true -DUSART_CALLBACK_MODE=true -D_DEBUG_=0 -D__SAMR34J18B__</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../src/ASF/sam0/boards/samr34_xplained_pro</Value>
@@ -876,7 +855,6 @@
       <Value>../src/ASF/thirdparty/wireless/lorawan/services/edbg_eui</Value>
       <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -897,7 +875,6 @@
     <Folder Include="src\ASF\common\services\serial\sam0_usart\" />
     <Folder Include="src\ASF\common\utils\" />
     <Folder Include="src\ASF\common\utils\interrupt\" />
-    <Folder Include="src\ASF\common\utils\unit_test" />
     <Folder Include="src\ASF\sam0\" />
     <Folder Include="src\ASF\sam0\boards\" />
     <Folder Include="src\ASF\sam0\boards\samr34_xplained_pro\" />
@@ -939,10 +916,6 @@
     <Folder Include="src\ASF\sam0\drivers\system\power\power_sam_l\" />
     <Folder Include="src\ASF\sam0\drivers\system\reset\" />
     <Folder Include="src\ASF\sam0\drivers\system\reset\reset_sam_l\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_buffering\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_dma\" />
     <Folder Include="src\ASF\sam0\drivers\tc\" />
     <Folder Include="src\ASF\sam0\drivers\tc\tc_sam_l_c\" />
     <Folder Include="src\ASF\sam0\utils\" />
@@ -1029,11 +1002,44 @@
     <Folder Include="src\ASF\thirdparty\wireless\services\nvm\" />
     <Folder Include="src\ASF\thirdparty\wireless\services\nvm\sam0\" />
     <Folder Include="src\config\" />
-    <Folder Include="src\EER34" />
-    <Folder Include="src\EER34\App" />
-    <Folder Include="src\EER34\Drivers" />
+    <Folder Include="src\EER34\" />
+    <Folder Include="src\EER34\App\" />
+    <Folder Include="src\EER34\Drivers\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\EER34\App\app.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_adc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_i2c.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_i2c.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\eer34_spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\eer34.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\eer34.h">
+      <SubType>compile</SubType>
+    </Compile>
     <None Include="src\asf.h">
       <SubType>compile</SubType>
     </None>
@@ -1080,6 +1086,9 @@
       <SubType>compile</SubType>
     </None>
     <None Include="Getting Started with Serial Provisioning of LoRaWAN Application.pdf">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MLS_Migration_Guide.pdf">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\sam0\utils\cmsis\samr34\include\instance\tcc1.h">
@@ -1203,12 +1212,6 @@
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\sam0\utils\cmsis\samr34\include\instance\mclk.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\thirdparty\wireless\services\common_hw_timer\sam0\lib\libsam0_lib_hw_timer.a">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\config\conf_certification.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\sam0\utils\status_codes.h">
@@ -1388,6 +1391,9 @@
     <None Include="src\ASF\sam0\drivers\system\clock\clock_samr34\clock_config_check.h">
       <SubType>compile</SubType>
     </None>
+    <None Include="src\ASF\thirdparty\wireless\services\common_hw_timer\sam0\lib\libsam0_lib_hw_timer.a">
+      <SubType>compile</SubType>
+    </None>
     <None Include="src\ASF\thirdparty\CMSIS\Include\mpu_armv7.h">
       <SubType>compile</SubType>
     </None>
@@ -1536,12 +1542,6 @@
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\ASF\common\utils\interrupt\interrupt_sam_nvic.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\common\utils\unit_test\suite.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\common\utils\unit_test\suite.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ASF\sam0\boards\samr34_xplained_pro\board_init.c">
@@ -1730,21 +1730,6 @@
     <Compile Include="src\ASF\sam0\drivers\system\system.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_buffering\qs_tcc_buffering.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_dma\qs_tcc_dma.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start\qs_tcc_basic.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\tcc\tcc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam0\drivers\tcc\tcc.h">
-      <SubType>compile</SubType>
-    </None>
     <Compile Include="src\ASF\sam0\drivers\tc\tc_interrupt.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1869,42 +1854,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ASF\thirdparty\wireless\services\nvm\sam0\sam_nvm.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\config\conf_test.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\App\app.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_adc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_adc.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_gpio.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_gpio.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_i2c.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_i2c.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_spi.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\Drivers\eer34_spi.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\eer34.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\EER34\eer34.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.c">

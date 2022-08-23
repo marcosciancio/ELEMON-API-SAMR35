@@ -4,7 +4,7 @@
 * \brief LoRaWAN header file
 *		
 *
-* Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries. 
+* Copyright (c) 2019-2020 Microchip Technology Inc. and its subsidiaries. 
 *
 * \asf_license_start
 *
@@ -204,6 +204,47 @@ typedef enum _EdClass
     CLASS_C = 1 << 2u
 } EdClass_t;
 
+/* GPS Epoch Time values */
+typedef struct _GPSEpochTime
+{
+    /* Time in seconds since GPS Epoch value - 4 bytes */
+    uint32_t secondsSinceEpoch;
+    /* Fractional second value in milliseconds - 1 byte */
+    uint8_t  fractionalSecond;
+} GPSEpochTime_t;
+
+/** Device time value in relation to GPS Epoch.
+*
+* This structure contains the value of GPS Epoch value and
+* corresponding system time value when the GPS Epoch
+* value is received by the stack
+**/
+typedef struct _DevTime
+{
+    /* Flag to indicate Device Time request mac command is sent */
+    bool isDevTimeReqSent;
+    /* Index of SwTimestamp_t that stores the system time corresponding to `gpsEpochTime` */
+    uint8_t sysEpochTimeIndex;
+    /* GPS Epoch time received in DeviceTimeAnswer MAC Command */
+    GPSEpochTime_t gpsEpochTime;
+} DevTime_t;
+
+typedef union _StackVersion_t
+{
+    uint32_t value;
+    COMPILER_PACK_SET(1)
+    struct
+    {
+        uint32_t reserved1 : 14;
+        uint32_t iteration :  4;
+        uint32_t qualifier :  2;
+        uint32_t minor     :  4;
+        uint32_t major     :  4;
+        uint32_t reserved2 :  4;
+    };
+    COMPILER_PACK_RESET()
+} StackVersion_t;
+
 /* LORAWAN Status information*/
 typedef union _LorawanStatus
 {
@@ -339,11 +380,39 @@ typedef struct _LorawanMcastFcnt
 	uint32_t fcntValue;
 }LorawanMcastFcnt_t;
 
+typedef struct _LorawanMcastDatarate
+{
+    uint8_t groupId;
+    uint8_t datarate;
+} LorawanMcastDatarate_t;
+
+typedef struct _LorawanMcastDlFreqeuncy
+{
+    uint8_t groupId;
+    uint32_t dlFrequency;
+} LorawanMcastDlFreqeuncy_t;
+
+typedef struct _LorawanMcastPeriodicity
+{
+    uint8_t groupId;
+    uint8_t periodicity;
+} LorawanMcastPeriodicity_t;
+
 typedef struct _LorawanMcastStatus
 {
 	uint8_t groupId;
 	bool status;
 }LorawanMcastStatus_t;
+
+typedef struct _TimeOnAirParams
+{
+    uint8_t dr;
+    uint8_t impHdrMode;
+    uint8_t crcOn;
+    uint8_t cr;
+    uint8_t pktLen;
+    uint16_t preambleLen;
+} TimeOnAirParams_t;
 
 /* List of LORAWAN attributes */
 typedef enum _LorawanAttributes
@@ -352,7 +421,7 @@ typedef enum _LorawanAttributes
     /* Device EUI - a global end-device ID in IEEE EUI64 address space that uniquely identifies end-device */
     DEV_EUI = 0,
     /* Application EUI - a global application ID in IEEE EUI64 address space that uniquely identifies the application provider (i.e., owner) of the end-device. */
-    APP_EUI,
+    JOIN_EUI,
     /* Device Address - a 32bit identifier of the end-device within the current network */
     DEV_ADDR,
     /* Application Key - an AES-128 application key specific for the end-device
@@ -401,14 +470,16 @@ typedef enum _LorawanAttributes
     ADR_ACKLIMIT,
     /* ADR Acknowledgment Delay - Refer LORa Regional parameters spec for more information on default value */
     ADR_ACKDELAY,
-    /* Acknowledgment Timeout - Refer LORa Regional parameters spec for more information on default value */
-    ACKTIMEOUT,
+    /* Retranmsission Timeout - Refer LORa Regional parameters spec for more information on default value */
+    RETRANSMITTIMEOUT,
     /* No of Retransmission for the confirmed uplink messages */
     CNF_RETRANSMISSION_NUM,
 	/* No of Repetition for the unconfirmed uplink messages */
 	UNCNF_REPETITION_NUM,
     /* Receive Window2 configurable parameters - RX2 window frequency and Datarate*/
     RX2_WINDOW_PARAMS,
+	/* Class C receive window configurable parameters - RXC window frequency and Datarate*/
+	RXC_WINDOW_PARAMS,
     /* Automatic Reply - If set, response to ACK and MAC command will be sent immediately */
     AUTOREPLY,
     /* Battery level of the device */
@@ -455,8 +526,18 @@ typedef enum _LorawanAttributes
 	MCAST_NWKS_KEY,
 	/* Multicast Application Session Key - 16 byte key to decrypt the Multicast application packets */
 	MCAST_APPS_KEY,
-	/* Multicast DL Frame counter */
-	MCAST_FCNT_DOWN,
+    /* Multicast DL Frame counter */
+    MCAST_FCNT_DOWN,
+	/* Multicast DL Frame counter min */
+	MCAST_FCNT_DOWN_MIN,
+	/* Multicast DL Frame counter max */
+	MCAST_FCNT_DOWN_MAX,
+    /* Multicast downlink Frequency */
+    MCAST_FREQUENCY,
+    /* Multicast downlink datarate */
+    MCAST_DATARATE,
+    /* Multicast class-B periodicity */
+    MCAST_PERIODICITY,
 	/*Enables Test Mode which Disable Duty Cycle for a Device, Override Features Supported by Regulatory*/
 	TEST_MODE_ENABLE,
 	/*Enables Join backoff support as per in Specification */
@@ -473,8 +554,10 @@ typedef enum _LorawanAttributes
 	LAST_CH_ID,
 	/* Duty Cycle pending interval */
 	PENDING_DUTY_CYCLE_TIME,
-	/* Number of retries in one transactions */
-	RETRY_COUNTER,
+	/* Number of confirmed retries in one transactions */
+	RETRY_COUNTER_CNF,
+	/* Number of unconfirmed retries in one transactions */
+	RETRY_COUNTER_UNCNF,
 	/* Next Payload size */
 	NEXT_PAYLOAD_SIZE,
 	/* Pending Join Back Off time */
@@ -492,8 +575,20 @@ typedef enum _LorawanAttributes
 	 */
 	MAX_FCNT_PDS_UPDATE_VAL,
 	/* Informing MAC that Crypto device is used for keyStorage */
-	CRYPTODEVICE_ENABLED
-}LorawanAttributes_t;
+	CRYPTODEVICE_ENABLED,
+    /* If set, ED shall send DeviceTimeReq cmd in next TX */
+    SEND_DEVICE_TIME_CMD,
+    /* Returns the software version of the running stack */
+    STACK_VERSION,
+    /* Returns the gps epoch time handle */
+    DEVICE_GPS_EPOCH_TIME,
+    /* Returns the packet time on air */
+    PACKET_TIME_ON_AIR,
+    /* Enable or disable duty cycle feature separately */
+    REGIONAL_DUTY_CYCLE,
+    /* If set, ED shall send LinkCheckReq cmd in next TX */
+    SEND_LINK_CHECK_CMD,
+} LorawanAttributes_t;
 
 /* Structure holding Receive window2 parameters*/
 /* This can be used for setting/getting RX2_WINDOW_PARAMS attribute */
@@ -758,6 +853,22 @@ void LORAWAN_SetCallbackBitmask(uint32_t evtmask);
  *  bool status = LORAWAN_ReadyToSleep(false);
 */
 bool LORAWAN_ReadyToSleep(bool deviceResetAfterSleep);
+
+/**
+ * @Summary
+    LORAWAN Set Multicast Param
+ * @Description
+    This function is used to set the various Mcast attributes specific from application.
+ * @Preconditions
+    None
+ * @Param
+    attrType - represents the attribute type; can be any of the MCAST parameters in (LorawanAttributes_t)
+	attrValue - pointer that is used to get the attribute value
+ * @Returns
+    The error condition for getting a given attribute.
+ * @Example
+*/
+StackRetStatus_t LORAWAN_SetMulticastParam(LorawanAttributes_t attrType, void *attrValue);
 
 #ifdef	__cplusplus
 }

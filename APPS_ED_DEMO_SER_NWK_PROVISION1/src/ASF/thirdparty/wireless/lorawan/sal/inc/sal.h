@@ -4,7 +4,7 @@
 * \brief Header File - Security Abstraction Layer
 *
 *
-* Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (c) 2019-2020 Microchip Technology Inc. and its subsidiaries.
 *
 * \asf_license_start
 *
@@ -53,8 +53,8 @@ typedef enum _salItems
 	/* Key Encryption Key - This key will be used while reading the Session keys 
 	 * from ECC608 in a secured way */
 	SAL_KEY_ENC_KEY			= 0x05,
-	/* Application EUI */
-	SAL_APP_EUI				= 0x06,
+	/* JOIN EUI */
+	SAL_JOIN_EUI				= 0x06,
 	/* Device EUI */
 	SAL_DEV_EUI				= 0x07,
 	//New key or item should be added before SAL_MAX_KEYS
@@ -140,7 +140,7 @@ SalStatus_t SAL_DeriveSessionKey(unsigned char* block, salItems_t src_key, unsig
  *         SAL_FAILURE			-- when CMAC calculation is failed
  *		   SAL_INVALID_KEY_TYPE -- when invalid key_type is given as input parameter
  */
-SalStatus_t SAL_AESCmac(uint8_t* key, salItems_t key_type, uint8_t* output, uint8_t* input, uint8_t size);
+SalStatus_t SAL_AESCmac(uint8_t* key, salItems_t key_type, uint8_t* output, uint8_t* input, uint16_t size);
 
 /**
  * \brief This function reads back the keys from ECC608 device using Encrypted Read

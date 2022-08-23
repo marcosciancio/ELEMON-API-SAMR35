@@ -43,7 +43,7 @@
 * mode i.e., when no transaction is happening.
 */
 #define CONF_PMM_SLEEPMODE_WHEN_IDLE  SLEEP_MODE_STANDBY
-//#define CONF_PMM_SLEEPMODE_WHEN_IDLE  SLEEP_MODE_BACKUP
+// #define CONF_PMM_SLEEPMODE_WHEN_IDLE  SLEEP_MODE_BACKUP
 
 #endif /* CONF_PMM_H_INCLUDED */
 

@@ -4,7 +4,7 @@
 * \brief LORAWAN Stack common include file
 *		
 *
-* Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries. 
+* Copyright (c) 2019-2020 Microchip Technology Inc. and its subsidiaries. 
 *
 * \asf_license_start
 *
@@ -50,10 +50,49 @@ extern "C" {
 #define MAJOR_NUM                 "1"
 #define MINOR_NUM                 "0"
 #define BUILD_TYPE                "P"                /* E or P */
-#define BUILD_NUM                 "3"
+#define BUILD_NUM                 "5"
 
 /* Release Version Information */
 #define STACK_VER    PRODUCT"_"MAJOR_NUM"_"MINOR_NUM"_"BUILD_TYPE"_"BUILD_NUM
+
+/* Release version information in 32-bit bitfield */
+/******************************************************************************
+Bit field information: This must be updated manually
+
+  /---------------------------------------------------\
+  | bit pos |    field name   |        meaning        |
+  |---------------------------------------------------|
+  |   0-13  |   reserved      |         NA            |
+  |         |                 |                       |
+  |---------------------------------------------------|
+  |  14-17  |     build       | running version of    |
+  |         |   iteration     | this release          |
+  |         |                 |                       |
+  |---------------------------------------------------|
+  |  18-19  |    qualifier    | 00 - reserved         |
+  |         |                 | 01 - Production  (P)  |
+  |         |                 | 10 - Engineering (E)  |
+  |         |                 | 11 - reserved         |
+  |---------------------------------------------------|
+  |  20-23  |  stack minor    | minor version         |
+  |         |                 |                       |
+  |---------------------------------------------------|
+  |  24-27  |  stack major    | major version         |
+  |         |                 |                       |
+  |---------------------------------------------------|
+  |  28-31  |   reserved      |         NA            |
+  |         |                 |                       |
+  \---------------------------------------------------/
+
+Example:
+  MLS_SDK_1_1_E_3 is represented as 0x0118C000
+
+  0000     0001    0001   10      0011   00000000000000
+    |       |       |      |       |            |
+ Reserved  stack  stack  qual. iteration    Reserved
+           major  minor 
+******************************************************************************/
+#define STACK_VERSION_VALUE     (0x01054000) // MLS_SDK_1_0_P_4
 
 /***************************** TYPEDEFS ***************************************/
 typedef enum _StackRetStatus
@@ -93,7 +132,8 @@ typedef enum _StackRetStatus
 	LORAWAN_TXPKT_ENCRYPTION_FAILED				,
 	LORAWAN_SKEY_DERIVATION_FAILED				,
 	LORAWAN_MIC_CALCULATION_FAILED				,
-	LORAWAN_SKEY_READ_FAILED      
+	LORAWAN_SKEY_READ_FAILED      ,
+    LORAWAN_JOIN_NONCE_ERROR
 } StackRetStatus_t;
 
 /* ISM Band Types*/

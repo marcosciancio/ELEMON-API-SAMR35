@@ -5,7 +5,7 @@
  *
  * This file defines common SAM0 series.
  *
- * Copyright (c) 2012-2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2012-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -80,9 +80,12 @@
 #  include "samr34.h"
 #endif
 
+#if (WLR089)
+#  include "wlr089.h"
+#endif
+
 #if (SAMR35)
-//#  include "samr35.h"
-#  include "samr34.h"
+#  include "samr34.h"   // samr35.h
 #endif
 
 #if (SAML22)
