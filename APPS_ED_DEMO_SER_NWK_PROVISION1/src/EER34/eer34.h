@@ -15,7 +15,7 @@
 // Macros
 
 #define EER34_TXBUFFER_SIZE		128		/**< tamaño del buffer de transmision */
-#define EER34_DEF_TX_TIMEOUT	20000	/**< timeout default de tramsision en ms */
+#define EER34_DEF_TX_TIMEOUT	60000	/**< timeout default de tramsision en ms */
 #define EER34_MAX_NA_CHANNELS		72
 #define EER34_MAX_SUBBAND_CHANNELS	8
 
@@ -29,6 +29,7 @@ typedef enum {
 	EER34_STATUS_TX_ACK,
 	EER34_STATUS_TX_TIMEOUT,
 	EER34_STATUS_RX_ERROR,
+	EER34_STATUS_TX_ERROR,
 } EER34_status_t;
 
 typedef enum {
