@@ -62,6 +62,12 @@ Versiones API_7_2 y API_7_2 (R35)
 
 Versiones API_8_1 y API_8_1 (R35)
 	Tiene las mismas correciones y cambios que la API_7_2.
+	
+Versiones API_8_2 y API_8_2 (R35)
+	Incluye los archivos de manejo de perifericos, SPI, I2C, UARTx2, GPIO, ADC, etc
+	
+Versiones API_8_3 y API_8_3 (R35)
+	Incluye los archivos para el control del acelerometro y memoria eeprom_64
 
 
 Versiones estables anteriores
