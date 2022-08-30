@@ -1043,6 +1043,7 @@
     <Folder Include="src\EER34" />
     <Folder Include="src\EER34\App" />
     <Folder Include="src\EER34\Drivers" />
+    <Folder Include="src\EER34\HW drivers" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\asf.h">
@@ -1912,10 +1913,34 @@
     <Compile Include="src\EER34\Drivers\EER34_spi.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\EER34\Drivers\EER34_uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\EER34_uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\I2C_custom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\Drivers\I2C_custom.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\EER34\eer34.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\EER34\eer34.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\HW drivers\EEPROM_64.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\HW drivers\EEPROM_64.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\HW drivers\LIS3DH.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\EER34\HW drivers\LIS3DH.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.c">
