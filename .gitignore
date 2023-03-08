@@ -10,7 +10,6 @@
 *.hex
 *.d
 *.ind
-*.ld
 *.asm
 *.bin
 *.atsuo
